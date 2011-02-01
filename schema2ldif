@@ -1,0 +1,50 @@
+#! /usr/bin/perl
+
+my $transforms = {
+    objectidentifier => 'olcObjectIdentifier:',
+    attributetype => 'olcAttributeTypes:',
+    objectclass   => 'olcObjectClasses:',
+};
+
+print <<'__HEADER__';
+dn: cn=DEFAULT_NAME,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: DEFAULT_NAME
+__HEADER__
+
+my $line = undef;
+while( my $read = <STDIN> ) {
+    # Skip blank lines and comments.
+    next if( $read =~ /^\s*(?:#|$)/ );
+
+    chomp( $read );
+    if( defined($line) ) {
+        $read =~ s/^\s+/ /;
+    }
+    $line .= $read;
+    # Merge multi-line quotes into one line.
+    if( $line =~ /'/ ) {
+        if( $line !~ /'.*'/ ) {
+            next;
+        }
+    }
+
+    if( $line =~ /^(\S+)/i ) {
+        my $from = $1 ;
+        my $to   = $transforms->{lc( $1 )};
+        if( $to ) {
+            $line =~ s/^$from/$to/;
+        }
+        else {
+            croak( "I don't know how to transform '$from'!" );
+        }
+        
+        $line =~ s/(\(\s+\S+)\s+(.*)/$1\n  $2/;
+    }
+    else {
+        $line =~ s/^\s+/  /;
+    }
+    
+    print $line . "\n";
+    $line = undef;
+}
