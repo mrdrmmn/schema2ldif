@@ -1,5 +1,14 @@
-This script is a quick hack that I've used to convert the .schema files
-that come with OpenLDAP into proper(?) .ldif files for use with the
-'cn=config' configuration setup.  I'm not sure how well it really works
-as I'm new to LDAP and have used this on exactly 1 schema file
-(duaconf.schema) and all I can say is that so far it seems to work.
+This script is a quick hack that I've used to convert the .schema files that
+that come with OpenLDAP into .ldif files for use with the 'cn=config'
+configuration setup.
+
+In the schema directory I've included the a number of schema files I've found
+around the net to test this script on.
+
+In the ldif directory I've include the converted ldif versions fo the files in
+the schema directory.
+
+You will notice that this script does not work on the microsoft* files.  This
+is because they include bits that I don't know if OpenLDAP even supports.  Some
+day I may figure this out, but for now I am keeping those schema files around
+for reference.

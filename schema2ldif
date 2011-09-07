@@ -1,50 +1,103 @@
 #! /usr/bin/perl
 
+use strict;
+use warnings;
+use Carp;
+
+my @files = @ARGV;
+
 my $transforms = {
-    objectidentifier => 'olcObjectIdentifier:',
-    attributetype => 'olcAttributeTypes:',
-    objectclass   => 'olcObjectClasses:',
+    objectidentifier      => 'olcObjectIdentifier:',
+    attributetype         => 'olcAttributeTypes:',
+    objectclass           => 'olcObjectClasses:',
+    # These only seem to show up in Microsoft Active directory schemas and I
+    # don't know if they map into anything for OpenLDAP...
+    #ditcontentrule        => 'olcDitContentRules:',
+    #extendedattributeinfo => '????',
 };
 
-print <<'__HEADER__';
-dn: cn=DEFAULT_NAME,cn=schema,cn=config
-objectClass: olcSchemaConfig
-cn: DEFAULT_NAME
-__HEADER__
+if( ! scalar @files ) {
+    print STDERR "usage: $0 FILE...\n";
+    print STDERR "\n";
+    print STDERR "$0 expects you to specify one or more files on the command line.  These\n";
+    print STDERR "files are assumed to be LDAP schema files and will be converted to LDIF\n";
+    print STDERR "formated schema files suitable for import into the cn=config portion of\n";
+    print STDERR "your OpenLDAP server.\n";
+    print STDERR "\n";
+    print STDERR "The schema 'name' will be derived from the original filename by striping\n";
+    print STDERR "off the trailing .schema (if it exists.)  The new filename will be the\n";
+    print STDERR "dirived schema name with .ldif appended.  If this file already exists, no\n";
+    print STDERR "it will not be modified and the schema will not be converted.\n";
 
-my $line = undef;
-while( my $read = <STDIN> ) {
-    # Skip blank lines and comments.
-    next if( $read =~ /^\s*(?:#|$)/ );
+    exit( 1 );
+}
 
-    chomp( $read );
-    if( defined($line) ) {
-        $read =~ s/^\s+/ /;
+foreach my $file ( @files ) {
+    print STDOUT "Processing $file...";
+
+    my( $ldif_file, $schema ) = ( $file =~ m|(.*?([^/]*?))(?:\.schema)?$| );
+    $ldif_file .= ".ldif";
+
+    if( -f $ldif_file ) {
+        print STDERR "$ldif_file already exists!\n";
+        exit( 1 );
     }
-    $line .= $read;
-    # Merge multi-line quotes into one line.
-    if( $line =~ /'/ ) {
-        if( $line !~ /'.*'/ ) {
+
+    print STDOUT "LDIF file will be '${ldif_file}'\n";
+    print STDOUT "schema name will be '${schema}'\n";
+
+    my( $in, $out );
+    open( $in,  '<', $file      ) or croak( $@ );
+    open( $out, '>', $ldif_file ) or croak( $@ );
+
+    print $out "dn: cn=${schema},cn=schema,cn=config\n";
+    print $out "objectClass: olcSchemaConfig\n";
+    print $out "cn: ${schema}\n";
+    print $out "\n";
+
+    my $line = undef;
+    while( my $read = <$in> ) {
+        # If we are not in the middle of a line, just print out blank lines
+        # and comments.  Otherwise, skip them.
+        if( $read =~ /^\s*(?:#|$)/ ) {
+            if( ! defined( $line ) ) {
+                print $out $read;
+            }
             next;
         }
-    }
 
-    if( $line =~ /^(\S+)/i ) {
-        my $from = $1 ;
-        my $to   = $transforms->{lc( $1 )};
-        if( $to ) {
-            $line =~ s/^$from/$to/;
+        chomp( $read );
+        if( defined($line) ) {
+            $read =~ s/^\s+/ /;
+        }
+        $line .= $read;
+        # Merge multi-line quotes into one line.
+        if( $line =~ /'/ ) {
+            if( $line !~ /'.*'/ ) {
+                next;
+            }
+        }
+
+        if( $line =~ /^(\S+)/i ) {
+            my $from = $1 ;
+            my $to   = $transforms->{lc( $1 )};
+            if( $to ) {
+                $line =~ s/^$from/$to/;
+            }
+            else {
+                croak( "I don't know how to transform '$from'!" );
+            }
+ 
+            $line =~ s/(\(\s+\S+)\s+(.*)/$1\n  $2/;
         }
         else {
-            croak( "I don't know how to transform '$from'!" );
+            $line =~ s/^\s+/  /;
         }
-        
-        $line =~ s/(\(\s+\S+)\s+(.*)/$1\n  $2/;
-    }
-    else {
-        $line =~ s/^\s+/  /;
-    }
     
-    print $line . "\n";
-    $line = undef;
+        print $out $line . "\n";
+        $line = undef;
+    }
+
+    close( $out );
+    close( $in );
 }
