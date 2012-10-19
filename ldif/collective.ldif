@@ -1,7 +1,6 @@
 dn: cn=collective,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: collective
-
 #INTERNET-DRAFT                           Editor:  Kurt D. Zeilenga
 #Intended Category: Standard Track                 OpenLDAP Foundation
 #Expires: 20 June 2002                             20 December 2001
@@ -9,9 +8,7 @@ cn: collective
 #
 #                      Collective Attributes in LDAP
 #                 <draft-zeilenga-ldap-collective-04.txt>
-
 # [ portions trimmed ]
-
 #Abstract
 #
 #  X.500 collective attributes allow common characteristics to be shared
@@ -20,7 +17,6 @@ cn: collective
 #  collective attributes in LDAP (Lightweight Directory Access Protocol).
 #  This document provides schema definitions for collective attributes
 #  for use in LDAP.
-
 #3. Collective Attribute Types
 #
 #  A userApplications attribute type can be defined to be COLLECTIVE

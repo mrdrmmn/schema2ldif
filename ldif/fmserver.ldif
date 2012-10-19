@@ -1,7 +1,6 @@
 dn: cn=fmserver,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: fmserver
-
 # $OpenLDAP: /etc/openldap/schema/fms.schema,v 1.0.0.0 2001/06/28 21:35:00  Exp $
 #
 #
@@ -49,7 +48,6 @@ olcAttributeTypes: ( 1.2.840.113556.1.4.48
   DESC 'Microsoft Active Directory Attribute'
   EQUALITY caseExactMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
-
 # -------------------------------------------------
 #	object class definitions
 # -------------------------------------------------
@@ -70,4 +68,3 @@ olcObjectClasses: ( 1.2.840.113556.1.5.126
   SUP ( connectionPoint )
   MUST ( name $ serviceBindingInformation)
   MAY ( l $ mail $ owner $ serviceClassName $ serviceDNSName $ serviceDNSNameType $ telephonenumber $ description ) )
-

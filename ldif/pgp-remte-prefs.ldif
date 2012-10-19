@@ -1,7 +1,6 @@
 dn: cn=pgp-remte-prefs,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: pgp-remte-prefs
-
 ##############################################################################
 #                                                                        
 #      PGP Remote Prefs schema for OpenLDAP                              
@@ -36,8 +35,6 @@ cn: pgp-remte-prefs
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #                                                                        
 ###############################################################################
-
-
 olcAttributeTypes: ( 1.3.6.1.4.1.3401.8.2.2
   NAME 'pgpElementType'
   DESC 'PGP defined attribute containing the type of the pref object'
@@ -52,7 +49,6 @@ olcAttributeTypes: ( 1.3.6.1.4.1.3401.8.2.3
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.40
   SINGLE-VALUE 
   X-ORIGIN 'Pretty Good Privacy (PGP)' )
-
 olcObjectClasses: ( 1.3.6.1.4.1.3401.8.2.4
   NAME 'pgpProfile' 
   DESC 'PGP defined objectclass of a collection admin prefs' 
