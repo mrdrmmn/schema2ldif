@@ -1,7 +1,6 @@
 dn: cn=dyngroup,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: dyngroup
-
 # dyngroup.schema -- Dynamic Group schema
 # $OpenLDAP: pkg/ldap/servers/slapd/schema/dyngroup.schema,v 1.1.2.3 2004/01/01 18:16:41 kurt Exp $
 ## This work is part of OpenLDAP Software <http://www.openldap.org/>.
@@ -21,18 +20,14 @@ cn: dyngroup
 #
 # depends upon:
 #	core.schema
-
 olcObjectIdentifier: NetscapeRoot 2.16.840.1.113730
-
 olcObjectIdentifier: NetscapeLDAP NetscapeRoot:3
 olcObjectIdentifier: NetscapeLDAPattributeType NetscapeLDAP:1
 olcObjectIdentifier: NetscapeLDAPobjectClass NetscapeLDAP:2
-
 olcAttributeTypes: ( NetscapeLDAPattributeType:198
   NAME 'memberURL'
   DESC 'Identifies an URL associated with each member of a group. Any type of labeled URL can be used.'
   SUP labeledURI )
-
 olcObjectClasses: ( NetscapeLDAPobjectClass:33
   NAME 'groupOfURLs'
   SUP top STRUCTURAL
