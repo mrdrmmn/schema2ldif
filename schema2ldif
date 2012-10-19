@@ -53,13 +53,16 @@ foreach my $file ( @files ) {
     print $out "dn: cn=${schema},cn=schema,cn=config\n";
     print $out "objectClass: olcSchemaConfig\n";
     print $out "cn: ${schema}\n";
-    print $out "\n";
 
     my $line = undef;
     while( my $read = <$in> ) {
-        # If we are not in the middle of a line, just print out blank lines
-        # and comments.  Otherwise, skip them.
-        if( $read =~ /^\s*(?:#|$)/ ) {
+        # Skip empty lines (*.ldif text must be continuous starting from dn: ..)
+        if ($read =~ /^\s*$/ ) {
+            next;
+        }
+        # If we are not in the middle of a line, just print out
+        # comments.  Otherwise, skip them.
+        if( $read =~ /^\s*(?:#)/ ) {
             if( ! defined( $line ) ) {
                 print $out $read;
             }
