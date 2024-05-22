@@ -1,0 +1,176 @@
+dn: cn=RoundCube,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: RoundCube
+# Roundcube.schema is from <http://www.typomedia.org/>.
+#
+# Copyright 2013 Typomedia Foundation.
+# All rights reserved.
+#
+# This schema is released under GPL version 3.
+#
+# OpenLDAP schema for Roundcube Webmail v1.4
+olcObjectIdentifier: RoundcubeRoot 1.3.6.1.4.1.42766.4.2
+olcObjectIdentifier: Roundcube RoundcubeRoot:1
+olcObjectIdentifier: RoundcubeAttributeType Roundcube:2
+olcObjectIdentifier: RoundcubeObjectClass Roundcube:3
+# Person
+olcAttributeTypes: ( RoundcubeAttributeType:110
+  NAME 'rcNickname'
+  DESC 'Nickname'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:120
+  NAME 'rcBirthday'
+  DESC 'Birthday'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{16}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:130
+  NAME 'rcGender'
+  DESC 'Gender'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{16}
+  SINGLE-VALUE )
+# Email
+olcAttributeTypes: ( RoundcubeAttributeType:210
+  NAME 'rcHomeMail'
+  DESC 'Homemail'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:220
+  NAME 'rcWorkMail'
+  DESC 'Workmail'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+# Telefax		
+olcAttributeTypes: ( RoundcubeAttributeType:310
+  NAME 'rcHomeFax'
+  DESC 'Homefax'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64} )
+olcAttributeTypes: ( RoundcubeAttributeType:320
+  NAME 'rcWorkFax'
+  DESC 'Workfax'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64} )
+# Websites	
+olcAttributeTypes: ( RoundcubeAttributeType:410
+  NAME 'rcHomeURL'
+  DESC 'Website Private'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:420
+  NAME 'rcWorkURL'
+  DESC 'Website Work'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:430
+  NAME 'rcBlogURL'
+  DESC 'Weblog'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:440
+  NAME 'rcProfileURL'
+  DESC 'Profile'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+# Instant Messenger
+olcAttributeTypes: ( RoundcubeAttributeType:510
+  NAME 'rcSkype'
+  DESC 'Skype'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:520
+  NAME 'rcJabber'
+  DESC 'Jabber'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:530
+  NAME 'rcAIM'
+  DESC 'AIM'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:540
+  NAME 'rcICQ'
+  DESC 'ICQ'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+# Location
+olcAttributeTypes: ( RoundcubeAttributeType:610
+  NAME 'rcRegion'
+  DESC 'Region'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:620
+  NAME 'rcCountry'
+  DESC 'Country'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+# Organization		
+olcAttributeTypes: ( RoundcubeAttributeType:710
+  NAME 'rcManager'
+  DESC 'Manager'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+olcAttributeTypes: ( RoundcubeAttributeType:720
+  NAME 'rcAssistant'
+  DESC 'Assistant'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+  SINGLE-VALUE )
+# Object class
+olcObjectClasses: ( RoundcubeObjectClass:1
+  NAME 'RoundcubeMail'
+  AUXILIARY
+  MAY ( rcNickname $
+  rcBirthday $
+  rcGender $
+  rcHomeMail $
+  rcWorkMail $
+  rcHomeFax $
+  rcWorkFax $
+  rcHomeURL $
+  rcWorkURL $
+  rcBlogURL $
+  rcProfileURL $
+  rcSkype $
+  rcJabber $
+  rcAIM $
+  rcICQ $
+  rcRegion $
+  rcCountry $
+  rcManager $
+  rcAssistant ))
